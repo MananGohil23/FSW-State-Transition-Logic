@@ -31,7 +31,7 @@ class FswState:
         if current_state == "LAUNCH_PAD":
             if pressure < launch_site_pressure and altitude > 0:
                 self.ascent_counter += 1
-                if self.ascent_counter > 10:
+                if self.ascent_counter > 4:
                     self.current_state = "ASCENT"
                     self.ascent_counter = 0
             else:
@@ -40,7 +40,7 @@ class FswState:
         elif current_state == "ASCENT":
             if vertical_velocity < 0.0001 and vertical_velocity > -0.0001:
                 self.apogee_counter += 1
-                if self.apogee_counter > 10:
+                if self.apogee_counter > 4:
                     self.current_state = "APOGEE"
                     self.maximum_height = altitude
                     self.apogee_counter = 0
@@ -50,7 +50,7 @@ class FswState:
         elif current_state == "APOGEE":
             if vertical_velocity < 0:
                 self.descent_counter += 1
-                if self.descent_counter > 10:
+                if self.descent_counter > 4:
                     self.current_state = "DESCENT"
                     self.descent_counter = 0
             else:
@@ -59,7 +59,7 @@ class FswState:
         elif current_state == "DESCENT":
             if altitude <= 0.8*self.maximum_height:
                 self.probe_release_counter += 1
-                if self.probe_release_counter > 10:
+                if self.probe_release_counter > 4:
                     self.current_state = "PROBE_RELEASE"
                     self.probe_release_counter = 0
             else:
@@ -68,7 +68,7 @@ class FswState:
         elif current_state == "PROBE_RELEASE":
             if altitude <= self.zero_calibration + 2:
                 self.payload_release_counter += 1
-                if self.payload_release_counter > 10:
+                if self.payload_release_counter > 4:
                     self.current_state = "PAYLOAD_RELEASE"
                     self.payload_release_counter = 0
             else:
@@ -77,7 +77,7 @@ class FswState:
         elif current_state == "PAYLOAD_RELEASE":
             if vertical_velocity < 0.0001 and vertical_velocity > -0.0001:
                 self.landed_counter += 1
-                if self.landed_counter > 10:
+                if self.landed_counter > 4:
                     self.current_state = "LANDED"
                     global mode
                     mode = "CX_OFF"
