@@ -18,31 +18,37 @@
     </style>
   </head>
   <body>
-    <nav class="bg-yellow-100 text-black p-4 shadow-sm shadow-yellow-100">
-      <div class="flex justify-between items-center">
-        <div class="flex gap-6 items-center">
-          <div class="text-2xl font-bold">Cansat GCS</div>
-          <div class="text-lg font-semibold">Team 1234</div>
+    <nav
+      class="bg-yellow-100 text-black p-3 sm:p-4 shadow-sm shadow-yellow-100"
+    >
+      <div
+        class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2 lg:gap-4"
+      >
+        <div class="flex flex-col sm:flex-row sm:gap-6 sm:items-center">
+          <div class="text-xl sm:text-2xl font-bold">Cansat GCS</div>
+          <div class="text-base sm:text-lg font-semibold">Team 1234</div>
         </div>
-        <div class="text-lg font-semibold">
+        <div class="text-sm sm:text-base lg:text-lg font-semibold">
           Mission Time : <span id="mission-time">00:00:00</span>
         </div>
-        <div class="text-lg font-semibold">
+        <div class="text-sm sm:text-base lg:text-lg font-semibold">
           FSW State : <span id="fsw-state">None</span>
         </div>
-        <div class="text-lg font-semibold">
+        <div class="text-sm sm:text-base lg:text-lg font-semibold">
           Mode : <span id="mode">None</span>
         </div>
       </div>
     </nav>
-    <div class="flex gap-4 bg-white h-screen w-full">
-      <div class="flex flex-col gap-4 ml-5">
+    <div
+      class="flex flex-col xl:flex-row gap-4 bg-white min-h-[calc(100vh-72px)] w-full p-3 sm:p-4"
+    >
+      <div class="flex-1 flex flex-col gap-4 min-w-0">
         <div
-          class="flex flex-col flex-1 scrollbar overflow-y-auto w-[1120px] h-[calc(100vh-100px)] font-semibold text-lg"
+          class="flex flex-col flex-1 scrollbar overflow-y-auto w-full min-w-0 max-h-[calc(100vh-240px)] xl:max-h-[calc(100vh-190px)] font-semibold text-base sm:text-lg"
         >
-          <div class="grid grid-cols-2 gap-4 mt-2 ml-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <div
-              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300 relative"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
             >
               <span class="absolute top-2 left-2">Gyro</span>
               <img
@@ -52,7 +58,7 @@
               />
             </div>
             <div
-              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
             >
               <span class="absolute top-2 left-2">Altitude</span>
               <img
@@ -62,9 +68,9 @@
               />
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-4 mt-2 ml-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <div
-              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
             >
               <span class="absolute top-2 left-2">Accelerometer</span>
               <img
@@ -74,7 +80,7 @@
               />
             </div>
             <div
-              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
             >
               <span class="absolute top-2 left-2">Pressure</span>
               <img
@@ -84,9 +90,9 @@
               />
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-4 mt-2 ml-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <div
-              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
             >
               <span class="absolute top-2 left-2">Temperature</span>
               <img
@@ -96,7 +102,7 @@
               />
             </div>
             <div
-              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
             >
               <span class="absolute top-2 left-2">Voltage + Current</span>
               <img
@@ -108,54 +114,56 @@
           </div>
         </div>
         <div
-          class="bg-yellow-100 w-full h-[100px] rounded-xl shadow-md shadow-yellow-100 text-center font-bold text-2xl p-2"
+          class="bg-yellow-100 w-full rounded-xl shadow-md shadow-yellow-100 text-center font-bold text-xl sm:text-2xl p-3"
         >
           CANSAT COMMANDS
-          <div class="flex justify-between text-lg font-semibold mt-2 gap-2">
+          <div
+            class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 text-sm sm:text-base font-semibold mt-3 gap-2"
+          >
             <button
-              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              class="bg-blue-500 text-white py-2 px-3 rounded-lg hover:bg-blue-600"
               id="cx-on"
             >
               CX ON
             </button>
             <button
-              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              class="bg-blue-500 text-white py-2 px-3 rounded-lg hover:bg-blue-600"
               id="cx-off"
             >
               CX OFF
             </button>
             <button
-              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              class="bg-blue-500 text-white py-2 px-3 rounded-lg hover:bg-blue-600"
               id="sim-enable"
             >
               SIM ENABLE
             </button>
             <button
-              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              class="bg-blue-500 text-white py-2 px-3 rounded-lg hover:bg-blue-600"
               id="sim-activate"
             >
               SIM ACTIVATE
             </button>
             <button
-              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              class="bg-blue-500 text-white py-2 px-3 rounded-lg hover:bg-blue-600"
               id="sim-disable"
             >
               SIM DISABLE
             </button>
             <button
-              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              class="bg-blue-500 text-white py-2 px-3 rounded-lg hover:bg-blue-600"
               id="mec-dep-on"
             >
               MEC DEP ON
             </button>
             <button
-              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              class="bg-blue-500 text-white py-2 px-3 rounded-lg hover:bg-blue-600"
               id="calibrate"
             >
               CALIBRATE
             </button>
             <button
-              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              class="bg-blue-500 text-white py-2 px-3 rounded-lg hover:bg-blue-600"
               id="set-gps-time"
             >
               SET GPS TIME
@@ -164,58 +172,62 @@
         </div>
       </div>
       <div
-        class="w-[350px] bg-yellow-100 rounded-lg mt-2 text-center font-bold text-2xl p-3 scrollbar overflow-y-auto h-100vh shadow-md shadow-yellow-100"
+        class="w-full xl:w-[350px] shrink-0 bg-yellow-100 rounded-lg mt-0 xl:mt-2 text-center font-bold text-xl sm:text-2xl p-3 scrollbar overflow-y-auto max-h-[70vh] xl:max-h-[calc(100vh-110px)] shadow-md shadow-yellow-100"
       >
         Telemetry
-        <div class="flex justify-between text-lg font-semibold mt-2">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           Packet Count : <span id="packet-count">0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           Last Packet Time : <span id="last-packet-time">00:00:00</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           State : <span id="state">0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           Altitude (m) : <span id="altitude">0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           Pressure (kPa) : <span id="pressure">0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           Voltage (V) : <span id="voltage">0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           Current (A) : <span id="current">0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           Gyro R/Y/P : <span id="gyro">0/0/0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           Accelerometer R/Y/P: <span id="accelerometer">0/0/0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2 mb-4">
+        <div
+          class="flex justify-between text-sm sm:text-lg font-semibold mt-2 mb-4"
+        >
           CMD Echo : <span id="cmd-echo">None</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-2 mb-4">
+        <div
+          class="flex justify-between text-sm sm:text-lg font-semibold mt-2 mb-4"
+        >
           Temperature (°C) : <span id="temperature">0</span>
         </div>
         <span class="p-2">GPS Position</span>
-        <div class="flex justify-between text-lg font-semibold mt-3">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-3">
           Longitude : <span id="longitude">0</span> Latitude :
           <span id="latitude">0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-3">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-3">
           GPS Altitude : <span id="gps-altitude">0</span> Sats Tracked :
           <span id="sats-tracked">0</span>
         </div>
-        <div class="flex justify-between text-lg font-semibold mt-3">
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-3">
           GPS Time : <span id="gps-time">00:00:00</span>
         </div>
         <img
           src="images/gps.jpg"
           alt="GPS"
-          class="w-full mt-4 h-56 object-cover rounded-lg"
+          class="w-full mt-4 h-40 sm:h-56 object-cover rounded-lg"
         />
       </div>
     </div>
