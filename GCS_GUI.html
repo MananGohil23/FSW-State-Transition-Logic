@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ground Control Station</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Manrope", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="bg-yellow-100 text-black p-4 shadow-sm shadow-yellow-100">
+      <div class="flex justify-between items-center">
+        <div class="flex gap-6 items-center">
+          <div class="text-2xl font-bold">Cansat GCS</div>
+          <div class="text-lg font-semibold">Team 1234</div>
+        </div>
+        <div class="text-lg font-semibold">
+          Mission Time : <span id="mission-time">00:00:00</span>
+        </div>
+        <div class="text-lg font-semibold">
+          FSW State : <span id="fsw-state">None</span>
+        </div>
+        <div class="text-lg font-semibold">
+          Mode : <span id="mode">None</span>
+        </div>
+      </div>
+    </nav>
+    <div class="flex gap-4 bg-white h-screen w-full">
+      <div class="flex flex-col gap-4 ml-5">
+        <div
+          class="flex flex-col flex-1 scrollbar overflow-y-auto w-[1120px] h-[calc(100vh-100px)] font-semibold text-lg"
+        >
+          <div class="grid grid-cols-2 gap-4 mt-2 ml-5">
+            <div
+              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300 relative"
+            >
+              <span class="absolute top-2 left-2">Gyro</span>
+              <img
+                src="/images/gyro.png"
+                alt="Gyro"
+                class="absolute top-10 w-[calc(100%-20px)] h-[calc(100%-45px)]"
+              />
+            </div>
+            <div
+              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+            >
+              <span class="absolute top-2 left-2">Altitude</span>
+              <img
+                src="/images/altitude.png"
+                alt="Altitude"
+                class="absolute top-10 w-[calc(100%-20px)] h-[calc(100%-45px)]"
+              />
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mt-2 ml-5">
+            <div
+              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+            >
+              <span class="absolute top-2 left-2">Accelerometer</span>
+              <img
+                src="/images/accelerometer.png"
+                alt="Accelerometer"
+                class="absolute top-10 w-[calc(100%-20px)] h-[calc(100%-45px)]"
+              />
+            </div>
+            <div
+              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+            >
+              <span class="absolute top-2 left-2">Pressure</span>
+              <img
+                src="/images/pressure.png"
+                alt="Pressure"
+                class="absolute top-10 w-[calc(100%-20px)] h-[calc(100%-45px)]"
+              />
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mt-2 ml-5">
+            <div
+              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+            >
+              <span class="absolute top-2 left-2">Temperature</span>
+              <img
+                src="/images/temperature.png"
+                alt="Temperature"
+                class="absolute top-10 w-[calc(100%-20px)] h-[calc(100%-45px)]"
+              />
+            </div>
+            <div
+              class="p-2 h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-105 transition-transform duration-300"
+            >
+              <span class="absolute top-2 left-2">Voltage + Current</span>
+              <img
+                src="/images/voltage_current.png"
+                alt="Voltage + Current"
+                class="absolute top-10 w-[calc(100%-20px)] h-[calc(100%-45px)]"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="bg-yellow-100 w-full h-[100px] rounded-xl shadow-md shadow-yellow-100 text-center font-bold text-2xl p-2"
+        >
+          CANSAT COMMANDS
+          <div class="flex justify-between text-lg font-semibold mt-2 gap-2">
+            <button
+              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              id="cx-on"
+            >
+              CX ON
+            </button>
+            <button
+              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              id="cx-off"
+            >
+              CX OFF
+            </button>
+            <button
+              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              id="sim-enable"
+            >
+              SIM ENABLE
+            </button>
+            <button
+              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              id="sim-activate"
+            >
+              SIM ACTIVATE
+            </button>
+            <button
+              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              id="sim-disable"
+            >
+              SIM DISABLE
+            </button>
+            <button
+              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              id="mec-dep-on"
+            >
+              MEC DEP ON
+            </button>
+            <button
+              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              id="calibrate"
+            >
+              CALIBRATE
+            </button>
+            <button
+              class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              id="set-gps-time"
+            >
+              SET GPS TIME
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-[350px] bg-yellow-100 rounded-lg mt-2 text-center font-bold text-2xl p-3 scrollbar overflow-y-auto h-100vh shadow-md shadow-yellow-100"
+      >
+        Telemetry
+        <div class="flex justify-between text-lg font-semibold mt-2">
+          Packet Count : <span id="packet-count">0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2">
+          Last Packet Time : <span id="last-packet-time">00:00:00</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2">
+          State : <span id="state">0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2">
+          Altitude (m) : <span id="altitude">0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2">
+          Pressure (kPa) : <span id="pressure">0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2">
+          Voltage (V) : <span id="voltage">0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2">
+          Current (A) : <span id="current">0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2">
+          Gyro R/Y/P : <span id="gyro">0/0/0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2">
+          Accelerometer R/Y/P: <span id="accelerometer">0/0/0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2 mb-4">
+          CMD Echo : <span id="cmd-echo">None</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-2 mb-4">
+          Temperature (°C) : <span id="temperature">0</span>
+        </div>
+        <span class="p-2">GPS Position</span>
+        <div class="flex justify-between text-lg font-semibold mt-3">
+          Longitude : <span id="longitude">0</span> Latitude :
+          <span id="latitude">0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-3">
+          GPS Altitude : <span id="gps-altitude">0</span> Sats Tracked :
+          <span id="sats-tracked">0</span>
+        </div>
+        <div class="flex justify-between text-lg font-semibold mt-3">
+          GPS Time : <span id="gps-time">00:00:00</span>
+        </div>
+        <img
+          src="images/gps.jpg"
+          alt="GPS"
+          class="w-full mt-4 h-56 object-cover rounded-lg"
+        />
+      </div>
+    </div>
+    <script src="GcsGui.js"></script>
+  </body>
+</html>
