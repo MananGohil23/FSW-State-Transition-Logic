@@ -35,6 +35,7 @@ Object.entries(commands).forEach(([buttonId, command]) => {
 const modes = {
   "cx-on": "Flight",
   "sim-activate": "Simulation",
+  "sim-disable": "None",
 }
 
 Object.entries(modes).forEach(([buttonId, modeValue]) => {
@@ -80,5 +81,13 @@ cxOffButton.addEventListener("click", () => {
   if (intervalId) {
     clearInterval(intervalId);
     intervalId = null;
+  }
+});
+
+cxOffButton.addEventListener("dblclick", () => {
+  if (totalSeconds !== 0) {
+    formattedTime = "00:00:00";
+    totalSeconds = 0;
+    document.getElementById("mission-time").textContent = formattedTime;
   }
 });
