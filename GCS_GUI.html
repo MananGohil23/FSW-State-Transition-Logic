@@ -34,8 +34,13 @@
         <div class="text-sm sm:text-base lg:text-lg font-semibold">
           FSW State : <span id="fsw-state">None</span>
         </div>
-        <div class="text-sm sm:text-base lg:text-lg font-semibold">
-          Mode : <span id="mode">None</span>
+        <div class = "flex gap-4 items-center">
+          <div class="text-sm sm:text-base lg:text-lg font-semibold">
+            Mode : <span id="mode">None</span>
+          </div>
+          <button class="bg-blue-500 text-wrap h-[35px] w-[50px] text-white font-bold py-1 px-2 rounded-lg hover:bg-blue-600" id="csv-download">
+            CSV
+          </button>
         </div>
       </div>
     </nav>
@@ -202,9 +207,7 @@
         <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           Accelerometer R/Y/P: <span id="accelerometer">0/0/0</span>
         </div>
-        <div
-          class="flex justify-between text-sm sm:text-lg font-semibold mt-2 mb-4"
-        >
+        <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
           CMD Echo : <span id="cmd-echo">None</span>
         </div>
         <div
@@ -224,11 +227,13 @@
         <div class="flex justify-between text-sm sm:text-lg font-semibold mt-3">
           GPS Time : <span id="gps-time">00:00:00</span>
         </div>
-        <img
-          src="images/gps.jpg"
-          alt="GPS"
-          class="w-full mt-4 h-40 sm:h-56 object-cover rounded-lg"
-        />
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6252.5860749393105!2d-79.58582890716589!3d38.411592294123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x884b459643f76c35%3A0x2a1c06347b906c97!2sMonterey%2C%20VA%2024465%2C%20USA!5e0!3m2!1sen!2sin!4v1784091189468!5m2!1sen!2sin"
+          class="w-full h-[300px] sm:h-[400px] rounded-lg mt-4"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
       </div>
     </div>
     <script src="GcsGui.js"></script>
