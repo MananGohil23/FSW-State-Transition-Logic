@@ -9,7 +9,7 @@ document.getElementById("mode").textContent = mode;
 const cxOnButton = document.querySelector("#cx-on");
 const cxOffButton = document.querySelector("#cx-off");
 
-const commandModes = {
+const commands = {
   "cx-on": "CX ON",
   "cx-off": "CX OFF",
   "sim-enable": "SIM ENABLE",
@@ -20,7 +20,7 @@ const commandModes = {
   "set-gps-time": "SET GPS TIME",
 };
 
-Object.entries(commandModes).forEach(([buttonId, nextMode]) => {
+Object.entries(commands).forEach(([buttonId, command]) => {
   const button = document.querySelector(`#${buttonId}`);
 
   if (!button) {
@@ -28,9 +28,25 @@ Object.entries(commandModes).forEach(([buttonId, nextMode]) => {
   }
 
   button.addEventListener("click", () => {
-    mode = nextMode;
+    document.getElementById("cmd-echo").textContent = command;
+  });
+});
+
+const modes = {
+  "cx-on": "Flight",
+  "sim-activate": "Simulation",
+}
+
+Object.entries(modes).forEach(([buttonId, modeValue]) => {
+  const button = document.querySelector(`#${buttonId}`);
+
+  if (!button) {
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    mode = modeValue;
     document.getElementById("mode").textContent = mode;
-    document.getElementById("cmd-echo").textContent = mode;
   });
 });
 

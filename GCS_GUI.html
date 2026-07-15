@@ -18,9 +18,7 @@
     </style>
   </head>
   <body>
-    <nav
-      class="bg-yellow-100 text-black p-3 sm:p-4 shadow-sm shadow-yellow-100"
-    >
+    <nav class="bg-[#C1E7FF] text-black p-3 sm:p-4">
       <div
         class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2 lg:gap-4"
       >
@@ -34,11 +32,14 @@
         <div class="text-sm sm:text-base lg:text-lg font-semibold">
           FSW State : <span id="fsw-state">None</span>
         </div>
-        <div class = "flex gap-4 items-center">
+        <div class="flex gap-4 items-center">
           <div class="text-sm sm:text-base lg:text-lg font-semibold">
             Mode : <span id="mode">None</span>
           </div>
-          <button class="bg-blue-500 text-wrap h-[35px] w-[50px] text-white font-bold py-1 px-2 rounded-lg hover:bg-blue-600" id="csv-download">
+          <button
+            class="bg-blue-500 text-wrap h-[35px] w-[50px] text-white font-bold py-1 px-2 rounded-lg hover:bg-blue-600"
+            id="csv-download"
+          >
             CSV
           </button>
         </div>
@@ -53,7 +54,7 @@
         >
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <div
-              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-[#C1E7FF] rounded-lg relative shadow-md shadow-[#C1E7FF]"
             >
               <span class="absolute top-2 left-2">Gyro</span>
               <img
@@ -63,7 +64,7 @@
               />
             </div>
             <div
-              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-[#C1E7FF] rounded-lg relative shadow-md shadow-[#C1E7FF]"
             >
               <span class="absolute top-2 left-2">Altitude</span>
               <img
@@ -75,7 +76,7 @@
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <div
-              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-[#C1E7FF] rounded-lg relative shadow-md shadow-[#C1E7FF]"
             >
               <span class="absolute top-2 left-2">Accelerometer</span>
               <img
@@ -85,7 +86,7 @@
               />
             </div>
             <div
-              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-[#C1E7FF] rounded-lg relative shadow-md shadow-[#C1E7FF]"
             >
               <span class="absolute top-2 left-2">Pressure</span>
               <img
@@ -97,7 +98,7 @@
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <div
-              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-[#C1E7FF] rounded-lg relative shadow-md shadow-[#C1E7FF]"
             >
               <span class="absolute top-2 left-2">Temperature</span>
               <img
@@ -107,7 +108,7 @@
               />
             </div>
             <div
-              class="p-2 h-[260px] sm:h-[300px] w-full bg-yellow-100 rounded-lg relative shadow-md shadow-yellow-100 hover:scale-[1.02] transition-transform duration-300"
+              class="p-2 h-[260px] sm:h-[300px] w-full bg-[#C1E7FF] rounded-lg relative shadow-md shadow-[#C1E7FF]"
             >
               <span class="absolute top-2 left-2">Voltage + Current</span>
               <img
@@ -119,9 +120,8 @@
           </div>
         </div>
         <div
-          class="bg-yellow-100 w-full rounded-xl shadow-md shadow-yellow-100 text-center font-bold text-xl sm:text-2xl p-3"
+          class="bg-[#C1E7FF] w-full rounded-xl shadow-md shadow-[#C1E7FF] text-center font-bold text-xl sm:text-2xl p-3"
         >
-          CANSAT COMMANDS
           <div
             class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 text-sm sm:text-base font-semibold mt-3 gap-2"
           >
@@ -177,7 +177,7 @@
         </div>
       </div>
       <div
-        class="w-full xl:w-[350px] shrink-0 bg-yellow-100 rounded-lg mt-0 xl:mt-2 text-center font-bold text-xl sm:text-2xl p-3 scrollbar overflow-y-auto max-h-[70vh] xl:max-h-[calc(100vh-110px)] shadow-md shadow-yellow-100"
+        class="w-full xl:w-[350px] shrink-0 bg-[#C1E7FF] rounded-lg mt-0 xl:mt-2 text-center font-bold text-xl sm:text-2xl p-3 scrollbar overflow-y-auto max-h-[70vh] xl:max-h-[calc(100vh-110px)] shadow-md shadow-[#C1E7FF]"
       >
         Telemetry
         <div class="flex justify-between text-sm sm:text-lg font-semibold mt-2">
