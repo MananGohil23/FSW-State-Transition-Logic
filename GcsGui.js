@@ -55,6 +55,7 @@ let totalSeconds = 0;
 let intervalId = null;
 let stateId = null;
 let altitude = 0;
+let isAscending = true;
 
 function updateTimer() {
   totalSeconds++;
@@ -74,8 +75,24 @@ function updateTimer() {
 }
 
 function updateState() {
-  altitude++;
-  document.getElementById("altitude").textContent = altitude;
+  if (isAscending) {
+    altitude++;
+    document.getElementById("altitude").textContent = altitude;
+    if (altitude >= 100) {
+      isAscending = false;
+    }
+  } else {
+    altitude--;
+    document.getElementById("altitude").textContent = altitude;
+    if (altitude <= 0) {
+      altitude = 0;
+      isAscending = true;
+      if (stateId) {
+        clearInterval(stateId);
+        stateId = null;
+      }
+    }
+  }
 }
 
 cxOnButton.addEventListener("click", () => {
@@ -112,8 +129,7 @@ cxOffButton.addEventListener("dblclick", () => {
     document.getElementById("last-packet-time").textContent = formattedTime;
   }
 
-  if (altitude !== 0) {
-    altitude = 0;
-    document.getElementById("altitude").textContent = altitude;
-  }
+  altitude = 0;
+  isAscending = true;
+  document.getElementById("altitude").textContent = altitude;
 });
