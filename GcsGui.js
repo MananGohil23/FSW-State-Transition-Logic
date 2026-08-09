@@ -53,8 +53,10 @@ Object.entries(modes).forEach(([buttonId, modeValue]) => {
 
 let totalSeconds = 0;
 let intervalId = null;
+let stateId = null;
+let altitude = 0;
 
-function updateInterval() {
+function updateTimer() {
   totalSeconds++;
 
   const hours = Math.floor(totalSeconds / 3600);
@@ -71,9 +73,17 @@ function updateInterval() {
   document.getElementById("mission-time").textContent = formattedTime;
 }
 
+function updateState() {
+  altitude++;
+  document.getElementById("altitude").textContent = altitude;
+}
+
 cxOnButton.addEventListener("click", () => {
   if (!intervalId) {
-    intervalId = setInterval(updateInterval, 1000);
+    intervalId = setInterval(updateTimer, 1000);
+  }
+  if (!stateId) {
+    stateId = setInterval(updateState, 300);
   }
 });
 
@@ -82,12 +92,28 @@ cxOffButton.addEventListener("click", () => {
     clearInterval(intervalId);
     intervalId = null;
   }
+
+  if (stateId) {
+    clearInterval(stateId);
+    stateId = null;
+  }
+
+  const currentMissionTime = document.getElementById("mission-time").textContent;
+  document.getElementById("last-packet-time").textContent = currentMissionTime;
 });
 
 cxOffButton.addEventListener("dblclick", () => {
+  document.getElementById("mode").textContent = "None";
+
   if (totalSeconds !== 0) {
-    formattedTime = "00:00:00";
+    const formattedTime = "00:00:00";
     totalSeconds = 0;
     document.getElementById("mission-time").textContent = formattedTime;
+    document.getElementById("last-packet-time").textContent = formattedTime;
+  }
+
+  if (altitude !== 0) {
+    altitude = 0;
+    document.getElementById("altitude").textContent = altitude;
   }
 });
