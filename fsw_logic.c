@@ -39,12 +39,18 @@ typedef struct {
     uint8_t state;
     float pad_pressure_pa;
     float maximum_height_m;
+    float mission_time_s;
+    float apogee_time_s;
+    float apogee_pressure_pa;
 } FswNvmRecord;
 
 typedef struct {
     FswStateId state;
     float pad_pressure_pa;
     float maximum_height_m;
+    float mission_time_s;
+    float apogee_time_s;
+    float apogee_pressure_pa;
     float previous_altitude_m;
     float previous_filtered_altitude_m;
     float filtered_altitude_m;
@@ -97,6 +103,9 @@ void FswInit(FswState *s)
     s->state = STATE_LAUNCH_PAD;
     s->pad_pressure_pa = SEA_LEVEL_PRESSURE_PA;
     s->maximum_height_m = 0.0f;
+    s->mission_time_s = 0.0f;
+    s->apogee_time_s = 0.0f;
+    s->apogee_pressure_pa = SEA_LEVEL_PRESSURE_PA;
     s->previous_altitude_m = 0.0f;
     s->previous_filtered_altitude_m = 0.0f;
     s->filtered_altitude_m = 0.0f;
@@ -171,6 +180,8 @@ void FswUpdate(FswState *s, float pressure_pa, float dt)
 {
     if (!s->active || dt <= 0.0f) return;
 
+    s->mission_time_s += dt;
+
     float used_pressure = pressure_pa;
     if (s->simulation && s->sim_valid) used_pressure = s->sim_pressure_pa;
 
@@ -189,7 +200,11 @@ void FswUpdate(FswState *s, float pressure_pa, float dt)
     s->previous_filtered_altitude_m = alt;
     s->filtered_altitude_m = alt;
 
-    if (alt > s->maximum_height_m) s->maximum_height_m = alt;
+    if (alt > s->maximum_height_m) {
+        s->maximum_height_m = alt;
+        s->apogee_time_s = s->mission_time_s;
+        s->apogee_pressure_pa = used_pressure;
+    }
 
     switch (s->state) {
     case STATE_LAUNCH_PAD:
@@ -274,12 +289,30 @@ bool FswTakeReleaseCommand(FswState *s)
     return cmd;
 }
 
+float FswPeakAltitude(const FswState *s)
+{
+    return s->maximum_height_m;
+}
+
+float FswPeakTime(const FswState *s)
+{
+    return s->apogee_time_s;
+}
+
+float FswMissionTime(const FswState *s)
+{
+    return s->mission_time_s;
+}
+
 void FswSaveToNvm(const FswState *s, void (*write)(const FswNvmRecord *))
 {
     FswNvmRecord rec;
     rec.state = (uint8_t)s->state;
     rec.pad_pressure_pa = s->pad_pressure_pa;
     rec.maximum_height_m = s->maximum_height_m;
+    rec.mission_time_s = s->mission_time_s;
+    rec.apogee_time_s = s->apogee_time_s;
+    rec.apogee_pressure_pa = s->apogee_pressure_pa;
     write(&rec);
 }
 
@@ -291,6 +324,9 @@ bool FswLoadFromNvm(FswState *s, bool (*read)(FswNvmRecord *))
     s->state = (FswStateId)rec.state;
     s->pad_pressure_pa = rec.pad_pressure_pa;
     s->maximum_height_m = rec.maximum_height_m;
+    s->mission_time_s = rec.mission_time_s;
+    s->apogee_time_s = rec.apogee_time_s;
+    s->apogee_pressure_pa = rec.apogee_pressure_pa;
     s->previous_altitude_m = rec.maximum_height_m;
     s->previous_filtered_altitude_m = rec.maximum_height_m;
     s->filtered_altitude_m = rec.maximum_height_m;
@@ -298,6 +334,28 @@ bool FswLoadFromNvm(FswState *s, bool (*read)(FswNvmRecord *))
     s->armed = (s->state != STATE_LAUNCH_PAD);
     s->active = (s->state != STATE_LANDED);
     return true;
+}
+
+int FswFormatCsvHeader(char *buf, size_t size)
+{
+    return snprintf(buf, size,
+        "ID,MISSION_TIME,PACKET_COUNT,COMMAND_COUNT,MODE,ALTITUDE,PRESSURE,"
+        "TEMPERATURE,BATT_V,BATT_I,MECH_STATE,STATE,APOGEE_ALT,APOGEE_TIME,CMD_ECHO\r\n");
+}
+
+int FswFormatCsvRow(char *buf, size_t size, const char *id,
+                    uint32_t packet_count, uint32_t command_count, char mode,
+                    const FswState *s, float pressure_pa, float temperature_c,
+                    float batt_v, float batt_i, uint32_t mech_state,
+                    const char *cmd_echo)
+{
+    return snprintf(buf, size,
+        "%s,%.3f,%lu,%lu,%c,%.1f,%.0f,%.1f,%.2f,%.0f,%lX,%s,%.1f,%.3f,%s\r\n",
+        id, (double)s->mission_time_s, (unsigned long)packet_count,
+        (unsigned long)command_count, mode, (double)s->filtered_altitude_m,
+        (double)pressure_pa, (double)temperature_c, (double)batt_v,
+        (double)batt_i, (unsigned long)mech_state, FswStateName(s->state),
+        (double)s->maximum_height_m, (double)s->apogee_time_s, cmd_echo);
 }
 
 #ifdef FSW_DEMO
@@ -321,7 +379,16 @@ int main(void)
     }
     FswSetArmed(&fsw, true);
 
+    FILE *csv = fopen("Flight_1000C.csv", "w");
+    char line[256];
+    uint32_t packet_count = 0;
+    if (csv) {
+        FswFormatCsvHeader(line, sizeof(line));
+        fputs(line, csv);
+    }
+
     float profile_alt = 0.0f;
+    float telemetry_timer = 0.0f;
     int phase = 0;
     for (int step = 0; step < 1000; step++) {
         if (phase == 0) {
@@ -342,15 +409,25 @@ int main(void)
         float pressure = altitude_to_pressure_m(profile_alt + noise);
         FswUpdate(&fsw, pressure, dt);
 
+        telemetry_timer += dt;
+        if (csv && telemetry_timer >= 0.25f) {
+            telemetry_timer = 0.0f;
+            FswFormatCsvRow(line, sizeof(line), "1000C", ++packet_count, 1, 'F',
+                            &fsw, pressure, 22.5f, 7.4f, 120.0f, 0x03u, "CXON");
+            fputs(line, csv);
+        }
+
         if (fsw.state != last) {
-            printf("t=%.1fs  ->  %s  (alt=%.1fm, peak=%.1fm)\n",
+            printf("t=%.1fs  ->  %s  (alt=%.1fm, peak=%.1fm @ t=%.1fs)\n",
                    0.1f * (float)step, FswStateName(fsw.state),
-                   fsw.filtered_altitude_m, fsw.maximum_height_m);
+                   fsw.filtered_altitude_m, FswPeakAltitude(&fsw), FswPeakTime(&fsw));
             last = fsw.state;
         }
     }
 
-    printf("final state: %s\n", FswStateName(fsw.state));
+    if (csv) fclose(csv);
+    printf("final state: %s  apogee=%.1fm @ %.1fs  log=Flight_1000C.csv\n",
+           FswStateName(fsw.state), FswPeakAltitude(&fsw), FswPeakTime(&fsw));
     return 0;
 }
 #endif
